@@ -88,10 +88,50 @@ class PedidoItemModel{
         return result;
     }
 
+    toJSON(){
+        return{
+            "pedidoID": this.#pedidoId,
+            "pedidoItemId":this.#pedidoItemId,
+            "pedidoItemPreco":this.#pedidoItemPreco,
+            "pedidoItemQuantidade":this.#pedidoItemQuantidade,
+            "produtoId":this.#produtoId,
+            "produtoNome":this.#produtoNome
+        }
+    }
+
     async listar(){
         let sql = `select * from tb_pedido p 
         inner join tb_pedidoitens i on p.ped_id = i.ped_id 
         inner join tb_produto pr on i.prd_id = pr.prd_id`;
+
+        let rows = await banco.ExecutaComando(sql);
+        let lista = [];
+
+        for(let i = 0; i < rows.length; i++){
+            let item = rows[i];
+            let pedidoItem = new PedidoItemModel(item['pit_id'], item['ped_id'], item['prd_id'], item['prd_nome'], item['pit_quantidade'], item['pit_preco']);
+
+            lista.push(pedidoItem);
+        }
+
+        return lista;
+    }
+
+    async filtrarPedidos(criterioBusca, termoBusca){
+
+        let sqlWhere = "";
+        if(criterioBusca == 'numpedido' && termoBusca != null){
+            sqlWhere = `where p.ped_id = ${termoBusca} `;
+        }
+        if(criterioBusca == 'nomeproduto' && termoBusca != null){
+            sqlWhere = `where pr.prd_nome like '%${termoBusca}%' `;
+        }
+
+        let sql = `select * from tb_pedido p 
+        inner join tb_pedidoitens i on p.ped_id = i.ped_id 
+        inner join tb_produto pr on i.prd_id = pr.prd_id
+        ${sqlWhere}
+        `
 
         let rows = await banco.ExecutaComando(sql);
         let lista = [];

@@ -29,10 +29,10 @@ class ProdutoModel {
     get possuiImagem() { return this.#possuiImagem; } set possuiImagem(possuiImagem) {this.#possuiImagem = possuiImagem;}
 
     constructor(produtoId, produtoCodigo, produtoNome, produtoQuantidade, categoriaId, marcaId, categoriaNome, marcaNome, produtoPreco, produtoImagem) {
-        this.#produtoId = produtoId
-        this.#produtoCodigo = produtoCodigo
-        this.#produtoNome = produtoNome
-        this.#produtoQuantidade = produtoQuantidade
+        this.#produtoId = produtoId;
+        this.#produtoCodigo = produtoCodigo;
+        this.#produtoNome = produtoNome;
+        this.#produtoQuantidade = produtoQuantidade;
         this.#categoriaId = categoriaId;
         this.#categoriaNome = categoriaNome;
         this.#marcaId = marcaId;

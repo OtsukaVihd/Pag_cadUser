@@ -19,6 +19,7 @@ class PedidoRoute {
 
         this.#router.get('/', ctrl.listar);
         //this.#router.get('/', auth.verificaLoginLoja, ctrl.listarView);
+        this.#router.post('/filtrar', ctrl.filtrar);
 
         
     }
